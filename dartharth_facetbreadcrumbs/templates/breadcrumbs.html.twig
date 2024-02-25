@@ -1,0 +1,20 @@
+{% if isset %}
+    <div class="breadcrumb-wrapper clearfix">
+        <ul itemscope itemtype="http://schema.org/BreadcrumbList" class="breadcrumb clearfix">
+            {% for item in breadcrumbs %}
+                {% if not loop.last %}
+                    <li itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+                        <a itemprop="item" href="{{ item.url }}">
+                            <span itemprop="name">{{ item.name }}</span>
+                        </a>
+                        <span class="dilimiter" itemprop="position" content="{{ item.position }}">{{ separator | raw }}</span>
+                    </li>
+                {% else %}
+                    <li>
+                        <span>{{ item.name }}</span>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}

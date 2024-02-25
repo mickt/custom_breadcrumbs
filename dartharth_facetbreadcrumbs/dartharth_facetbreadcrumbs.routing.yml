@@ -1,0 +1,7 @@
+dartharth_facetbreadcrumbs.settings:
+  path: '/admin/config/search/breadcrumbs-custom'
+  defaults:
+    _form: '\Drupal\dartharth_facetbreadcrumbs\Form\BreadcrumbsCustomSettingsForm'
+    _title: 'Breadcrumbs custom Settings'
+  requirements:
+    _permission: 'administer site configuration'

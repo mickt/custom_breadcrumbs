@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ */
+function dartharth_facetbreadcrumbs_theme() {
+    $info['breadcrumbs'] = [
+        'variables' => [
+            'breadcrumbs' => '',
+            'separator' => '',
+            'isset' => '',
+        ],
+    ];
+    return $info;
+}

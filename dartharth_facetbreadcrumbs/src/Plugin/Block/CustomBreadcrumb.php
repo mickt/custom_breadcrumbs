@@ -101,10 +101,10 @@ class CustomBreadcrumb extends BlockBase {
                                     $first_parent_title = $first_parent->name->value;
                                     $first_parent_url = \Drupal::service('pathauto.alias_cleaner')->cleanString($first_parent_title);
 
-                                    if($bread_types = 'no_facets') {
+                                    if($bread_types == 'no_facets') {
                                         $first_parent_url = $aliasManager->getAliasByPath('/taxonomy/term/' . $first_parent->tid->value);
                                         $first_url = str_replace('/catalog', '/catalog', $first_parent_url);
-                                    } elseif ($bread_types = 'has_facets'){
+                                    } elseif ($bread_types == 'has_facets'){
                                         if($pretty_paths_coder = 'taxonomy_term_name_id'){
                                             $first_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$first_parent_url.'-'.$first_parent_id;
                                         } elseif ($pretty_paths_coder = 'taxonomy_term_name') {
@@ -125,10 +125,10 @@ class CustomBreadcrumb extends BlockBase {
 
                                 $category_parent_title = $category_parent->name->value;
                                 $category_parent_url = \Drupal::service('pathauto.alias_cleaner')->cleanString($category_parent_title);
-                                if($bread_types = 'no_facets') {
+                                if($bread_types == 'no_facets') {
                                     $parent_url = $aliasManager->getAliasByPath('/taxonomy/term/' . $category_parent->tid->value);
                                     $parent_url = str_replace('/catalog', '/catalog', $parent_url);
-                                } elseif ($bread_types = 'has_facets'){
+                                } elseif ($bread_types == 'has_facets'){
                                     if($pretty_paths_coder = 'taxonomy_term_name_id'){
                                         $parent_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$category_parent_url.'-'.$category_parent_id;
                                     } elseif ($pretty_paths_coder = 'taxonomy_term_name') {
@@ -148,10 +148,10 @@ class CustomBreadcrumb extends BlockBase {
 
                                 $child_name_url = \Drupal::service('pathauto.alias_cleaner')->cleanString($category_title);
 
-                                if($bread_types = 'no_facets') {
+                                if($bread_types == 'no_facets') {
                                     $child_url = $aliasManager->getAliasByPath('/taxonomy/term/' . $category->tid->value);
                                     $child_url = str_replace('/catalog', '/catalog', $child_url);
-                                } elseif ($bread_types = 'has_facets'){
+                                } elseif ($bread_types == 'has_facets'){
                                     if($pretty_paths_coder = 'taxonomy_term_name_id'){
                                         $child_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$child_name_url.'-'.$category_id;
                                     } elseif ($pretty_paths_coder = 'taxonomy_term_name') {
@@ -176,10 +176,12 @@ class CustomBreadcrumb extends BlockBase {
                             $category = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($category_id);
                             $category_title = $category->name->value;
                             $category_url = \Drupal::service('pathauto.alias_cleaner')->cleanString($category_title);
-                            if($bread_types = 'no_facets') {
+
+                            if($bread_types == 'no_facets') {
                                 $category_url = $aliasManager->getAliasByPath('/taxonomy/term/' . $category->tid->value);
                                 $category_url = str_replace('/catalog', '/catalog', $category_url);
-                            } elseif ($bread_types = 'has_facets'){
+                            } elseif ($bread_types == 'has_facets'){
+
                                 if($pretty_paths_coder == 'taxonomy_term_name_id'){
                                     $category_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$category_url.'-'.$category_id;
                                 } elseif ($pretty_paths_coder == 'taxonomy_term_name') {
@@ -188,16 +190,18 @@ class CustomBreadcrumb extends BlockBase {
                                     $category_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$category_id.'';
                                 }
                             }
+
                             $parent_id = $category->parent->target_id;
+
                             if($parent_id !== '0'){
                                 $parent = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($parent_id);
                                 $parent_title = $parent->name->value;
                                 $parent_url = \Drupal::service('pathauto.alias_cleaner')->cleanString($parent_title);
 
-                                if($bread_types = 'no_facets') {
+                                if($bread_types == 'no_facets') {
                                     $parent_url = $aliasManager->getAliasByPath('/taxonomy/term/' . $parent->tid->value);
                                     $parent_url = str_replace('/catalog', '/catalog', $parent_url);
-                                } elseif ($bread_types = 'has_facets'){
+                                } elseif ($bread_types == 'has_facets'){
                                     if($pretty_paths_coder == 'taxonomy_term_name_id'){
                                         $parent_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$parent_url.'-'.$parent_id;
                                     } elseif ($pretty_paths_coder == 'taxonomy_term_name') {
@@ -207,18 +211,50 @@ class CustomBreadcrumb extends BlockBase {
                                     }
                                 }
 
+                                $hight_level_parent_id = $parent->parent->target_id;
+
+                                if($hight_level_parent_id !== '0'){
+                                    $hight_level_parent = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->load($hight_level_parent_id);
+                                    $hight_level_parent_title = $hight_level_parent->name->value;
+                                    $hight_level_parent_url = \Drupal::service('pathauto.alias_cleaner')->cleanString($hight_level_parent_title);
+
+                                    if($bread_types == 'no_facets') {
+                                        $hight_level_parent_url = $aliasManager->getAliasByPath('/taxonomy/term/' . $hight_level_parent->tid->value);
+                                        $hight_level_parent_url = str_replace('/catalog', '/catalog', $hight_level_parent_url);
+                                    } elseif ($bread_types == 'has_facets'){
+                                        if($pretty_paths_coder == 'taxonomy_term_name_id'){
+                                            $hight_level_parent_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$hight_level_parent_url.'-'.$hight_level_parent_id;
+                                        } elseif ($pretty_paths_coder == 'taxonomy_term_name') {
+                                            $hight_level_parent_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$hight_level_parent_url.'';
+                                        } elseif ($pretty_paths_coder = 'taxonomy_term_id') {
+                                            $hight_level_parent_url = ''.$facet_catalog_path.'/'.$category_facet_alias.'/'.$hight_level_parent_id.'';
+                                        }
+                                    }
+
+                                    $breadcrumbs[] = [
+                                        'url' => $hight_level_parent_url,
+                                        'name' => $hight_level_parent_title,
+                                        'position' => $position,
+                                    ];
+                                    $position++;
+
+                                }
+
                                 $breadcrumbs[] = [
                                     'url' => $parent_url,
                                     'name' => $parent_title,
                                     'position' => $position,
                                 ];
                                 $position++;
+
                             }
+
                             $breadcrumbs[] = [
                                 'url' => $category_url,
                                 'name' => $category_title,
                                 'position' => $position,
                             ];
+
                             $position++;
                         }
                     }
@@ -227,7 +263,7 @@ class CustomBreadcrumb extends BlockBase {
             $breadcrumbs[]['name'] = $node->title->value;
         }
 
-        if ($bread_types = 'has_facets'){
+        if ($bread_types == 'has_facets'){
             $path_parts = explode('/', trim($current_path, '/'));
             $facet_path = str_replace('/', '', $facet_catalog_path);
             if ($path_args[1] == $facet_path) {
